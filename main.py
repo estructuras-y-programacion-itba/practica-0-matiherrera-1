@@ -1,4 +1,6 @@
 # Tu implementacion va aqui
+
+def dado():
 def hola_mundo():
     return "hola_mundo"
 
