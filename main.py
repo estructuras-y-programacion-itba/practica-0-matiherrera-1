@@ -18,15 +18,33 @@ def hola_mundo():
 def turno():
     finaliza=False
     dados_guardados=[]
-    for i in range(3) and finaliza==False:
-        tirada=[]
-        for j in range(5-len(dados_guardados)):
-            valor = dado()
-            tirada.append(valor)
-        finalizar= upper_custom(input("Desea finalizar su turno?: "))
-        if finalizar=="SI":
-            for k in range(len(tirada)):
-                dados_guardados.append(tirada[k])
+    i=0
+    while finaliza==False and i<3:
+        
+            tirada=[]
+            j=0
+            
+            while j<5:
+                valor = dado()
+                tirada.append(valor) 
+                j+=1           
+            print(f'Tirada {tirada}')
+            
+            finalizar= upper_custom(input("Desea finalizar su turno?: "))
+            if finalizar=="SI":
+                for k in range(len(tirada)):
+                    dados_guardados.append(tirada[k])
+                finaliza=True
+            else:
+                guardar= input("Que valores de dados guarda: ")
+                for l in range(len(tirada)):
+                    for n in range(len(guardar)):
+                        caracter=guardar[n]
+                        if caracter==str(tirada[l]):
+                            dados_guardados.append(tirada[l])                        
+                finaliza=False
+            i+=1
+    print(dados_guardados)
             
             
             
@@ -38,6 +56,7 @@ def main():
     print(hola_mundo())
     print("Juego Generala")
     print("Turno jugador 1")
+    turno()
     
 
 
