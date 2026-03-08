@@ -139,6 +139,7 @@ def opciones(dados_guardados, categorias_usadas, numeros_usados):
                 suma = dado_elegido * apariciones
                 puntaje += suma
                 categoria_valida = True 
+                jugada_elegida = str(dado_elegido)
             else:
                 print("Ya eligio ese numero anteriormente. Elija otro.") 
                 
@@ -154,12 +155,13 @@ def opciones(dados_guardados, categorias_usadas, numeros_usados):
                 if respuesta == "E":
                     puntaje += 20
                 categoria_valida = True 
+                jugada_elegida = respuesta
             else:
                 print("Ya utilizo esta categoria en un turno anterior. Elija otra.") 
         else:
             print("Letra incorrecta. Por favor ingrese N, G, P, F o E.")
 
-    return puntaje     
+    return puntaje, jugada_elegida     
 def main():
     # Aqui ejecutas tus soluciones
     print(hola_mundo())
@@ -172,16 +174,19 @@ def main():
     puntaje_tot2 = 0
     generala_real1=False
     generala_real2=False
+    crear_csv()
     while generala_real1==False and generala_real2==False and len(categorias_j1)+len(numeros_j1)<11 and len(categorias_j2)+len(numeros_j2)<11:
         print("Turno jugador 1")
         dados_guardados, bonus, generala_real1 = turno()
-        puntaje_parcial = opciones(dados_guardados, categorias_j1, numeros_j1) 
-        puntaje_tot += puntaje_parcial + bonus
-        print(f"Puntaje de la ronda: {puntaje_tot}")
+        puntaje_parcial, jugada1 = opciones(dados_guardados, categorias_j1, numeros_j1) 
+        puntaje_tot1 += puntaje_parcial + bonus
+        agregar_jugada_csv(1, jugada1, puntaje_parcial + bonus)
+        print(f"Puntaje de la ronda: {puntaje_tot1}")
         print("Turno jugador 2")
         dados_guardados2, bonus2, generala_real2 = turno()
-        puntaje_parcial2 = opciones(dados_guardados2, categorias_j2, numeros_j2) 
+        puntaje_parcial2, jugada2 = opciones(dados_guardados2, categorias_j2, numeros_j2) 
         puntaje_tot2 += puntaje_parcial2 + bonus2
+        agregar_jugada_csv(2, jugada2, puntaje_parcial2 + bonus2)
         print(f"Puntaje de la ronda: {puntaje_tot2}")
     print("Fin del juego")
     if generala_real1 == True:
