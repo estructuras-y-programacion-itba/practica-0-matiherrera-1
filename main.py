@@ -14,7 +14,12 @@ def dado():
 def hola_mundo():
     return "hola_mundo"
 
-
+def ordenar_custom(lista):
+    for i in range(len(lista)):
+        for j in range(i + 1, len(lista)):
+            if lista[i] > lista[j]:
+                lista[i], lista[j] = lista[j], lista[i]
+    return lista
 def turno():
     finaliza=False
     dados_guardados=[]
@@ -42,8 +47,75 @@ def turno():
                 dados_guardados.append(tirada[z])
             finaliza=True
         intentos+=1
-    print(dados_guardados)
+    print(f'Los dados guardados son: {dados_guardados}')
+    return dados_guardados
+
+def fulls(dados_ordenados):
+    if (dados_ordenados[0]==dados_ordenados[1] and dados_ordenados[0]==dados_ordenados[2] and dados_ordenados[3]==dados_ordenados[4]) or (dados_ordenados[0]==dados_ordenados[1] and dados_ordenados[2]==dados_ordenados[3] and dados_ordenados[2]==dados_ordenados[4]):
+        return True
+    else:
+        return False        
+def escaleras(dados_ordenados):
+    if dados_ordenados == [1, 2, 3, 4, 5]:
+        return True
+    elif dados_ordenados == [2, 3, 4, 5, 6]:
+        return True
+    else:
+        return False
+def pokers(dados_ordenados):
+    if (dados_ordenados[0]==dados_ordenados[1] and dados_ordenados[0]==dados_ordenados[2] and dados_ordenados[0]==dados_ordenados[3]) or (dados_ordenados[4]==dados_ordenados[3] and dados_ordenados[4]==dados_ordenados[2] and dados_ordenados[4]==dados_ordenados[1]):
+        return True
+    else:
+        return False
+def generalas(dados_ordenados):
+    if dados_ordenados[0]==dados_ordenados[1] and dados_ordenados[0]==dados_ordenados[2] and dados_ordenados[0]==dados_ordenados[4] and dados_ordenados[0]==dados_ordenados[3]:
+        return True
+    else:
+        return False
+    
+
+def opciones(dados_guardados): 
+    dados_ordenados= ordenar_custom(dados_guardados) 
+    escalera=escaleras(dados_ordenados)
+    escalera_previa=False
+    elige_escalera=False
+    if escalera==True and escalera_previa==False:
+        print("Puede elegir escalera 'E'")
+    full = fulls(dados_ordenados)
+    full_previo=False
+    elige_full=False
+    if full==True and full_previo==False:
+        print("Puede elegir full 'F'")
+    poker=pokers(dados_ordenados)
+    poker_previo=False
+    elige_poker=False
+    if poker==True and poker_previo==False:
+        print("Puede elegir poker 'P'")
+    generala = generalas(dados_ordenados)
+    generala_previa=False
+    elige_generala=False
+    if generala==True and generala_previa==False:
+        print("Puede elegir generala 'G'")
+        
+        
+           
+    respuesta=upper_custom(input("Presione 'E' para escoger escalera"))
+    if respuesta=="G":
+        elige_generala=True
+        generala_previa=True
+    if respuesta=="P":
+        elige_poker=True
+        poker_previo=True
+    if respuesta=="F":
+        elige_full==True
+        full_previo==True
+    if respuesta=="E":
+        elige_escalera==True
+        escalera_previa==True
             
+        
+    
+                  
             
             
             
@@ -54,7 +126,7 @@ def main():
     print(hola_mundo())
     print("Juego Generala")
     print("Turno jugador 1")
-    turno()
+    dados_guardados = turno()
     
 
 
