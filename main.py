@@ -24,12 +24,26 @@ def turno():
     finaliza=False
     dados_guardados=[]
     intentos=0
+    bonus=0
     while finaliza==False and intentos<3:
         tirada=[]
         for j in range(5-len(dados_guardados)):
             valor = dado()
             tirada.append(valor) 
         print(f'Tirada {intentos+1}: {tirada}')
+        
+        if intentos==1:
+            tirada_ord=ordenar_custom(tirada)
+            bonusE= escaleras(tirada_ord)
+            bonusF= fulls(tirada_ord)
+            bonusP= pokers(tirada_ord)
+            generala_real= generalas(tirada_ord)
+            if bonusE==True or bonusF==True or bonusP==True:
+                bonus+=5
+            if generala_real==True:
+                bonus+=30
+            
+            
             
         if intentos<2:
             finalizar= upper_custom(input("Desea finalizar su turno?: "))
@@ -48,7 +62,8 @@ def turno():
             finaliza=True
         intentos+=1
     print(f'Los dados guardados son: {dados_guardados}')
-    return dados_guardados
+    dados_ord= ordenar_custom(dados_guardados)
+    return dados_ord,bonus
 
 def fulls(dados_ordenados):
     if (dados_ordenados[0]==dados_ordenados[1] and dados_ordenados[0]==dados_ordenados[2] and dados_ordenados[3]==dados_ordenados[4]) or (dados_ordenados[0]==dados_ordenados[1] and dados_ordenados[2]==dados_ordenados[3] and dados_ordenados[2]==dados_ordenados[4]):
@@ -72,7 +87,7 @@ def generalas(dados_ordenados):
         return True
     else:
         return False
-    
+
 
 def opciones(dados_guardados): 
     dados_ordenados= ordenar_custom(dados_guardados) 
@@ -96,23 +111,41 @@ def opciones(dados_guardados):
     elige_generala=False
     if generala==True and generala_previa==False:
         print("Puede elegir generala 'G'")
+    numeros=True
+    numeros_previos=False
+    elige_numeros=False
+    if numeros==True and numeros_previos==False:
+        print("Puede elegir numeros 'N'")       
+    respuesta=upper_custom(input("Presione la letra correspondiente a la categoria que desea elegir: "))
+    puntaje = 0
+    if respuesta=="N":
+        elige_numeros=True
+        numeros_previos=True
+        dado_elegido=int(input("Ingrese el dado que elige"))
+        apariciones=0
+        for j in range(len(dados_ordenados)):
+            if dados_ordenados[j]==dado_elegido:
+                apariciones+=1
+        suma = dado_elegido*apariciones
+        puntaje+=suma
         
-        
-           
-    respuesta=upper_custom(input("Presione 'E' para escoger escalera"))
     if respuesta=="G":
         elige_generala=True
         generala_previa=True
+        puntaje+=50
     if respuesta=="P":
         elige_poker=True
         poker_previo=True
+        puntaje+=40
     if respuesta=="F":
         elige_full==True
         full_previo==True
+        puntaje+=30
     if respuesta=="E":
         elige_escalera==True
         escalera_previa==True
-            
+        puntaje+=20
+    return puntaje       
         
     
                   
@@ -126,7 +159,10 @@ def main():
     print(hola_mundo())
     print("Juego Generala")
     print("Turno jugador 1")
-    dados_guardados = turno()
+    dados_guardados, bonus = turno()
+    puntaje_parcial= opciones(dados_guardados)
+    puntaje_tot= puntaje_parcial+bonus
+    print(puntaje_tot)
     
 
 
