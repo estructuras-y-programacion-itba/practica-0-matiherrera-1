@@ -18,18 +18,15 @@ def hola_mundo():
 def turno():
     finaliza=False
     dados_guardados=[]
-    i=0
-    while finaliza==False and i<3:
-        
-            tirada=[]
-            j=0
+    intentos=0
+    while finaliza==False and intentos<3:
+        tirada=[]
+        for j in range(5-len(dados_guardados)):
+            valor = dado()
+            tirada.append(valor) 
+        print(f'Tirada {intentos+1}: {tirada}')
             
-            while j<5:
-                valor = dado()
-                tirada.append(valor) 
-                j+=1           
-            print(f'Tirada {tirada}')
-            
+        if intentos<2:
             finalizar= upper_custom(input("Desea finalizar su turno?: "))
             if finalizar=="SI":
                 for k in range(len(tirada)):
@@ -38,12 +35,13 @@ def turno():
             else:
                 guardar= input("Que valores de dados guarda: ")
                 for l in range(len(tirada)):
-                    for n in range(len(guardar)):
-                        caracter=guardar[n]
-                        if caracter==str(tirada[l]):
-                            dados_guardados.append(tirada[l])                        
-                finaliza=False
-            i+=1
+                    if str(tirada[l]) in guardar:
+                        dados_guardados.append(tirada[l]) 
+        else:
+            for z in range(len(tirada)):
+                dados_guardados.append(tirada[z])
+            finaliza=True
+        intentos+=1
     print(dados_guardados)
             
             
