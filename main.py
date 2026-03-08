@@ -1,5 +1,6 @@
 # Tu implementacion va aqui
 import random
+import csv
 def upper_custom(texto):
     resultado = ""
     for char in texto:
@@ -89,6 +90,17 @@ def generalas(dados_ordenados):
         return True
     else:
         return False
+def crear_csv():
+    with open('jugadas.csv', 'w', newline='', encoding='utf-8') as archivo:
+        escritor = csv.writer(archivo)
+        escritor.writerow(['jugada', 'j1', 'j2'])
+def agregar_jugada_csv(jugador, jugada, puntos):
+    with open('jugadas.csv', 'a', newline='', encoding='utf-8') as archivo:
+        escritor = csv.writer(archivo)
+        if jugador == 1:
+            escritor.writerow([jugada, puntos, 0])
+        else:
+            escritor.writerow([jugada, 0, puntos])
 def opciones(dados_guardados, categorias_usadas, numeros_usados): 
     dados_ordenados = ordenar_custom(dados_guardados) 
     
