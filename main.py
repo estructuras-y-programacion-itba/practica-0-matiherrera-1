@@ -145,6 +145,8 @@ def opciones(dados_guardados):
         elige_escalera==True
         escalera_previa==True
         puntaje+=20
+    if elige_escalera==False and elige_full==False and elige_generala==False and elige_poker==False:
+        print("No hace ninguna jugada, suma 0pts")
     return puntaje       
         
     
